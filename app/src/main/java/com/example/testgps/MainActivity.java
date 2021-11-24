@@ -16,6 +16,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
         if (ContextCompat.checkSelfPermission(
@@ -46,9 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 1000,
-                0, mLocationListener);
+        if(locationManager.getProvider(LocationManager.NETWORK_PROVIDER) != null){
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000,
+                    0, mLocationListener);
+        }
 
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,
+          //      0, mLocationListener);
 
 
 
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
-            TextView textView = findViewById(R.id.GPS);
+            TextView textView = findViewById(R.id.Location);
             textView.setText(location.toString());
         }
     };
