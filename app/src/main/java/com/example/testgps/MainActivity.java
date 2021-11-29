@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(this, HelloService.class);
+        startService(intent);
+
 
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -45,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        if(locationManager.getProvider(LocationManager.NETWORK_PROVIDER) != null){
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000,
-                    0, mLocationListener);
-        }
+//        if(locationManager.getProvider(LocationManager.NETWORK_PROVIDER) != null){
+//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000,
+//                    0, mLocationListener);
+//        }
 
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,
           //      0, mLocationListener);
